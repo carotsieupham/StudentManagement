@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_manage/src/modules/homePage/coponents/home_menu.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -24,12 +25,10 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20,),
             GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-
             ),
                 children:[
-                  CardWidget(size: size),
-                  CardWidget(size: size),
-
+                  CardWidget(icon: FontAwesomeIcons.eye,onTap: (){},content: "Xem danh sách",size: size),
+                  CardWidget(icon: FontAwesomeIcons.penToSquare,onTap: (){},content: "Chỉnh sửa danh sách",size: size),
                 ],
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(
@@ -48,13 +47,13 @@ class HomePage extends StatelessWidget {
 
 class CardWidget extends StatelessWidget {
   CardWidget({
+    super.key,
     required this.icon,
     required this.onTap,
     required this.content,
-    super.key,
     required this.size,
   });
-  Icon icon;
+  IconData icon;
   Function onTap;
   String content;
   final Size size;
@@ -69,12 +68,16 @@ class CardWidget extends StatelessWidget {
           child: Container(
             width:size.width*0.4,
             height: size.height*0.2,
-            color: Colors.red,
+            color: Color(0xff45a8ad),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person, size: 50, color: Colors.white,),
-                Text(content, style: TextStyle(color: Colors.white, fontSize: 20)),
+                FaIcon(icon, size: 50, color: Colors.white,),
+                Text(content,
+                  style: TextStyle(color: Colors.white, fontSize: 20,),
+                  textAlign: TextAlign.center,
+
+                ),
               ],
             )
           ),
