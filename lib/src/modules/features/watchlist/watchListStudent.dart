@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:student_manage/src/modules/watchlist/componets/cardBodyWidget.dart';
+
+import '../componets/cardBodyWidget.dart';
+
 
 class WatchStudentPage extends StatelessWidget {
   const WatchStudentPage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    bool isDelete=false;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Danh sách sinh viên'),
@@ -14,9 +16,9 @@ class WatchStudentPage extends StatelessWidget {
            padding: const EdgeInsets.all(31),
            child:Column(
              children: [
-               CardBodyWidget(),
-               CardBodyWidget(),
-               CardBodyWidget(),
+               CardBodyWidget(isDelete: isDelete,),
+               CardBodyWidget(isDelete: isDelete,),
+               CardBodyWidget(isDelete: isDelete,),
              ],
            )
       )
