@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../componets/cardBodyWidget.dart';
 
-class UpdatePage extends StatelessWidget {
-  const UpdatePage({super.key});
+class DeletePage extends StatelessWidget {
+  const DeletePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    bool isDelete=false;
-    bool isEdit=true;
+    bool isDelete=true;
+    bool isEdit=false;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Chỉnh sửa'),
+          title: const Text('Xóa sinh viên'),
         ),
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(31),

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../updatePage/components/cardModalButton.dart';
 
 class CardBodyWidget extends StatelessWidget {
-  CardBodyWidget({Key? key,required this.isDelete}) : super(key: key);
-  bool isDelete;
+  final bool isDelete;
+  final bool isEdit;
+
+  const CardBodyWidget({
+    Key? key,
+    required this.isDelete,
+    required this.isEdit,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,62 +25,65 @@ class CardBodyWidget extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                 RichText(text: TextSpan(
-                   children: [
-                     TextSpan(
-                       text: "2251150039",
-                       style: const TextStyle(
-                         fontSize: 22,
-                         color: Color(0xff4B4B4B),
-                         fontWeight: FontWeight.bold,
-                       ),
-                     ),
-                     TextSpan(
-                       text: " - ",
-                       style: const TextStyle(
-                         fontSize: 22,
-                         color: Color(0xff4B4B4B),
-                         fontWeight: FontWeight.bold,
-                       ),
-                     ),
-                     TextSpan(
-                       text: "Trần Minh Trí",
-                       style: const TextStyle(
-                         fontSize: 22,
-                         color: Color(0xff4B4B4B),
-                         fontWeight: FontWeight.bold,
-                       ),
-                     ),
-                   ]
-                 )),
-                  Text(
-                    "CN22CLCF",
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       color: Color(0xff4B4B4B),
+                      fontWeight: FontWeight.bold,
                     ),
+                    children: [
+                      TextSpan(text: "2251150039"),
+                      TextSpan(text: " - "),
+                      TextSpan(text: "Trần Minh Trí"),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Text(
+                  "CN22CLCF",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Color(0xff4B4B4B),
+                  ),
+                ),
+              ],
             ),
-            Visibility(
-              visible: isDelete,
-              child: InkWell(
+            if (isDelete)
+              InkWell(
                 onTap: () {
-
+                  print('hello');
                 },
-                child: Icon(Icons.delete,color: Colors.red,size:35),
+                child: Icon(Icons.delete, color: Colors.red, size: 35),
               ),
-            )
+            if (isEdit)
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(context: context,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top:Radius.circular(20))
+                      ),
+                      isScrollControlled: true,
+                      builder: (BuildContext context){
+                          return CardModalButton();
+                  });
+                },
+                child: FaIcon(
+                  FontAwesomeIcons.userPen,
+                  color: Color(0xff4B4B4B),
+                  size: 35,
+                ),
+              ),
           ],
         ),
       ),
     );
   }
 }
+
+
+

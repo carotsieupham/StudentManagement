@@ -8,6 +8,8 @@ class WatchStudentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDelete=false;
+    bool isEdit=false;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Danh sách sinh viên'),
@@ -16,9 +18,9 @@ class WatchStudentPage extends StatelessWidget {
            padding: const EdgeInsets.all(31),
            child:Column(
              children: [
-               CardBodyWidget(isDelete: isDelete,),
-               CardBodyWidget(isDelete: isDelete,),
-               CardBodyWidget(isDelete: isDelete,),
+               CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
+               CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
+               CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
              ],
            )
       )
