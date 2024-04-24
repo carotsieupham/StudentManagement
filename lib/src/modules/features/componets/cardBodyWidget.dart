@@ -6,9 +6,10 @@ import '../updatePage/components/cardModalButton.dart';
 class CardBodyWidget extends StatelessWidget {
   final bool isDelete;
   final bool isEdit;
-
-  const CardBodyWidget({
+  var students;
+   CardBodyWidget({
     Key? key,
+     required this.students,
     required this.isDelete,
     required this.isEdit,
   }) : super(key: key);
@@ -38,14 +39,14 @@ class CardBodyWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                      TextSpan(text: "2251150039"),
+                      TextSpan(text: students.id),
                       TextSpan(text: " - "),
-                      TextSpan(text: "Trần Minh Trí"),
+                      TextSpan(text: students.name),
                     ],
                   ),
                 ),
                 Text(
-                  "CN22CLCF",
+                  students.classname,
                   style: const TextStyle(
                     fontSize: 20,
                     color: Color(0xff4B4B4B),

@@ -17,9 +17,9 @@ class DeletePage extends StatelessWidget {
             padding: const EdgeInsets.all(31),
             child:Column(
               children: [
-                CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
-                CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
-                CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
+                // CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
+                // CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
+                // CardBodyWidget(isDelete: isDelete,isEdit: isEdit,),
               ],
             )
         )
