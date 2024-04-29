@@ -1,17 +1,20 @@
 class Students{
    late final String _id;
+   late final String _mssv;
    late final String _name;
-   late final String _classname;
-   Students(this._id, this._name,this._classname);
+   late final String _classid;
 
-   String get classname => _classname;
+
+   Students(this._id, this._mssv, this._name, this._classid);
+
+  String get classid => _classid;
 
   String get name => _name;
 
   String get id => _id;
 
-   set classname(String value) {
-    _classname = value;
+   set classid(String value) {
+     _classid = value;
   }
 
   set name(String value) {
@@ -20,5 +23,11 @@ class Students{
 
   set id(String value) {
     _id = value;
+  }
+
+   String get mssv => _mssv;
+
+  set mssv(String value) {
+    _mssv = value;
   }
 }

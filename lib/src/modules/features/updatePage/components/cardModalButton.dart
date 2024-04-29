@@ -1,10 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CardModalButton extends StatelessWidget {
-  const CardModalButton({
-    super.key,
+class CardModalButton extends StatefulWidget {
+  CardModalButton({
+    super.key,required this.students, required this.classes
   });
+  var students;
+  String classes;
+  @override
+  State<CardModalButton> createState() => _CardModalButtonState();
+}
 
+class _CardModalButtonState extends State<CardModalButton> {
+  late TextEditingController _nameController;
+  late TextEditingController _classController;
+  late TextEditingController _mssvController;
+  Map<String, String> classid = {
+    'CN22CLCF': 'C01',
+    'CN22CLCA': 'C02',
+  };
+  void updateStudent() async{
+    try{
+      await FirebaseFirestore.instance.collection('student').doc(widget.students.id).update({
+        'name':_nameController.text,
+        'classid':classid[_classController.text],
+        'mssv':_mssvController.text
+      });
+    }catch(e){
+      print('Error updating document: $e');
+    }
+  }
+  @override
+  void initState() {
+
+    super.initState();
+    _nameController=TextEditingController(text:widget.students.name);
+    _classController=TextEditingController(text:widget.classes);
+    _mssvController=TextEditingController(text:widget.students.mssv);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,9 +47,7 @@ class CardModalButton extends StatelessWidget {
             child:Column(
                 children:[
                   TextField(
-                    onChanged:(value){
-
-                    },
+                    controller: _nameController,
                     decoration:const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Tên sinh viên'
@@ -24,30 +55,29 @@ class CardModalButton extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
                   TextField(
-                    onChanged:(value){
-
-                    },
+                    controller: _classController,
                     decoration:const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Lớp'
                     ) ,
                   ),
-                  const SizedBox(height: 20,),TextField(
-                    onChanged:(value){
-
-                    },
+                  const SizedBox(height: 20,),
+                  TextField(
+                    controller: _mssvController,
                     decoration:const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Mssv'
                     ) ,
                   ),
                   const SizedBox(height: 20,),
-
                   SizedBox(
                       width:double.infinity,
                       height:50 ,
                       child:ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            updateStudent();
+                            Navigator.of(context).pop();
+                          },
                           style: ElevatedButton.styleFrom(backgroundColor:Colors.blue),
                           child:const Text('Chỉnh sửa')
                       )

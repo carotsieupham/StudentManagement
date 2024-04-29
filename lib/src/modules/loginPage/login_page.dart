@@ -62,6 +62,7 @@ class LoginPage extends StatelessWidget {
               TextField(
                 controller: _passwordController,
                 style: const TextStyle(fontSize: 18),
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: 'Mật khẩu',
                   labelStyle:

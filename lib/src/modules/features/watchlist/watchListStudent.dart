@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:student_manage/src/model/students.dart';
-import '../componets/cardBodyWidget.dart';
+import '../componets/list_student.dart';
 
 
 class WatchStudentPage extends StatefulWidget {
@@ -25,29 +24,7 @@ class _WatchStudentPageState extends State<WatchStudentPage> {
       ),
       body: SingleChildScrollView(
            padding: const EdgeInsets.all(31),
-           child:StreamBuilder(
-             stream: _stream ,
-             builder: (context, snapshot) {
-               if(!snapshot.hasData){
-                 return const Center(child:CircularProgressIndicator()) ;
-               }
-               return ListView.builder(
-                   shrinkWrap: true,
-                   itemCount: snapshot.data!.docs.length,
-                   itemBuilder: (context,index){
-                     Students students=Students(
-                         snapshot.data!.docs[index]['id'],
-                         snapshot.data!.docs[index]['name'],
-                         snapshot.data!.docs[index]['classname']
-                     );
-                 return CardBodyWidget(
-                    students: students,
-                   isDelete: isDelete,
-                   isEdit: isEdit,
-                 );
-               });
-             }
-           )
+            child: ListStudents(stream: _stream, isDelete: isDelete, isEdit: isEdit)
       )
     );
   }

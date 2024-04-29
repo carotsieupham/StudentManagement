@@ -1,13 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AddStudentPage extends StatelessWidget {
+import '../../../firebase/firebase_firestore.dart';
+
+class AddStudentPage extends StatefulWidget {
   AddStudentPage({super.key});
+
+  @override
+  State<AddStudentPage> createState() => _AddStudentPageState();
+}
+
+class _AddStudentPageState extends State<AddStudentPage> {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController classController = TextEditingController();
-  final TextEditingController idController = TextEditingController();
+
+  final TextEditingController mssvController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, String> classid = {
+      'CN22CLCF': 'C01',
+      'CN22CLCA': 'C02',
+    };
     return Scaffold(
       appBar: AppBar(
         title: const Text('Thêm sinh viên'),
@@ -18,9 +33,6 @@ class AddStudentPage extends StatelessWidget {
           children: [
             TextField(
               controller: nameController,
-              onChanged: (value) {
-                // text=value;
-              },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Họ và tên',
@@ -29,9 +41,6 @@ class AddStudentPage extends StatelessWidget {
             const SizedBox(height: 20),
             TextField(
               controller: classController,
-              onChanged: (value) {
-                // text=value;
-              },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Lớp',
@@ -39,10 +48,7 @@ class AddStudentPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
-              controller: idController,
-              onChanged: (value) {
-                // text=value;
-              },
+              controller: mssvController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Mssv',
@@ -55,11 +61,10 @@ class AddStudentPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   String name = nameController.text.trim();
-                  String className = classController.text.trim();
-                  String id = idController.text.trim();
-
+                  String classname = classController.text.trim();
+                  String mssv = mssvController.text.trim();
                   // Kiểm tra nếu có bất kỳ trường nào trống
-                  if (name.isEmpty || className.isEmpty || id.isEmpty) {
+                  if (name.isEmpty || classname.isEmpty || mssv.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Vui lòng điền đầy đủ thông tin'),
@@ -67,18 +72,12 @@ class AddStudentPage extends StatelessWidget {
                       ),
                     );
                   } else {
-                    // Nếu thông tin đầy đủ, tiến hành thêm sinh viên
-                    FirebaseFirestore firestore = FirebaseFirestore.instance;
                     try {
-                      await firestore.collection('student').add({
-                        'name': name,
-                        'classname': className,
-                        'id': id
-                      });
+                      FireStore.addStudent(name, classid[classname]!, mssv);
                       // Xóa nội dung của các TextField sau khi thêm sinh viên
                       nameController.clear();
                       classController.clear();
-                      idController.clear();
+                      mssvController.clear();
                       // Hiển thị snackbar thông báo thành công
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
