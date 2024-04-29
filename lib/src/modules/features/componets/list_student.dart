@@ -36,7 +36,9 @@ class ListStudents extends StatelessWidget {
                     snapshot.data!.docs[index]['classid']
                 );
                 return GestureDetector(
+
                   onTap:(){
+                    if(isDelete||isEdit){return;}
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailStudentPage(students: students,)));
                   } ,
                   child: CardBodyWidget(

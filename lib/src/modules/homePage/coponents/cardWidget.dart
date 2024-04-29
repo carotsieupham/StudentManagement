@@ -30,7 +30,7 @@ class CardWidget extends StatelessWidget {
                 children: [
                   FaIcon(icon, size: 50, color: Colors.white,),
                   Text(content,
-                    style: TextStyle(color: Colors.white, fontSize: 20,),
+                    style: const TextStyle(color: Colors.white, fontSize: 20,),
                     textAlign: TextAlign.center,
 
                   ),

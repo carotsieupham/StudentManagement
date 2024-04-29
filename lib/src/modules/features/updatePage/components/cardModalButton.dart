@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:student_manage/src/firebase/firebase_firestore.dart';
 
 class CardModalButton extends StatefulWidget {
   CardModalButton({
@@ -19,17 +20,7 @@ class _CardModalButtonState extends State<CardModalButton> {
     'CN22CLCF': 'C01',
     'CN22CLCA': 'C02',
   };
-  void updateStudent() async{
-    try{
-      await FirebaseFirestore.instance.collection('student').doc(widget.students.id).update({
-        'name':_nameController.text,
-        'classid':classid[_classController.text],
-        'mssv':_mssvController.text
-      });
-    }catch(e){
-      print('Error updating document: $e');
-    }
-  }
+
   @override
   void initState() {
 
@@ -75,7 +66,10 @@ class _CardModalButtonState extends State<CardModalButton> {
                       height:50 ,
                       child:ElevatedButton(
                           onPressed: (){
-                            updateStudent();
+                            FireStore.updateStudent(widget.students.id,
+                                _nameController.text,
+                                classid[_classController.text]!,
+                                _mssvController.text);
                             Navigator.of(context).pop();
                           },
                           style: ElevatedButton.styleFrom(backgroundColor:Colors.blue),

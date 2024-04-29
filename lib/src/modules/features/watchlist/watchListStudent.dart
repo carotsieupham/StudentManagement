@@ -25,7 +25,8 @@ class _WatchStudentPageState extends State<WatchStudentPage> {
       body: SingleChildScrollView(
            padding: const EdgeInsets.all(31),
             child: ListStudents(stream: _stream, isDelete: isDelete, isEdit: isEdit)
-      )
+      ),
+
     );
   }
 }

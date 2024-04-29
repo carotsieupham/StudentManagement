@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:student_manage/src/model/students.dart';
 
 class FireStore {
 
@@ -13,9 +14,45 @@ class FireStore {
     });
   }
 
-  static Future<void> deleteStudent(String studentsId) async {
+  static Future<void> updateStudent(
+      String id, String name, String classID, String mssv) async {
+    // Cập nhật thông tin sinh viên
+    try{
+      await FirebaseFirestore.instance.collection('student').doc(id).update({
+        'name':name,
+        'classid':classID,
+        'mssv':mssv
+      });
+    }catch(e){
+      print('Error updating document: $e');
+    }
+  }
+
+  static Future<void> addGrades(
+      String mssv, String grades, String subjectID) async {
+    // Thêm sinh viên vào bảng student
+    await FirebaseFirestore.instance.collection('studentGrades').add({
+      'mssv': mssv,
+      'grades': grades,
+      'subjectId': subjectID
+    });
+  }
+
+  static Future<void> deleteStudent(Students students) async {
     try {
-      await FirebaseFirestore.instance.collection('student').doc(studentsId).delete();
+      final firestoreInstance = await FirebaseFirestore.instance;
+      final studentGradesSnapshot = await firestoreInstance
+          .collection('studentGrades')
+          .where('mssv', isEqualTo: students.mssv)
+          .get();
+      studentGradesSnapshot.docs.forEach((doc)async  {
+        try {
+          await doc.reference.delete();
+        } catch (e) {
+          print('Error deleting document: $e');
+        }
+      });
+      firestoreInstance.collection('student').doc(students.id).delete();
     } catch (e) {
       print('Error deleting document: $e');
     }
@@ -79,7 +116,6 @@ class FireStore {
         .collection('subject')
         .where('subjectId', isEqualTo: subjectID)
         .get();
-
 
       // Lấy SubjectName từ kết quả truy vấn
       subjectName = subjectSnapshot.docs[0].get('name');

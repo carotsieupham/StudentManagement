@@ -69,7 +69,7 @@ class CardBodyWidget extends StatelessWidget {
                     if (isDelete)
                       InkWell(
                         onTap: () {
-                          FireStore.deleteStudent(students.id);
+                          FireStore.deleteStudent(students);
                         },
                         child: const Icon(Icons.delete, color: Colors.red, size: 35),
                       ),

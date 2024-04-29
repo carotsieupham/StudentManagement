@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_manage/src/modules/features/addStudent/addStudentPage.dart';
 import 'package:student_manage/src/modules/features/updatePage/updatePage.dart';
@@ -29,8 +27,11 @@ class HomePage extends StatelessWidget {
             )
             ),
             const SizedBox(height: 20,),
-            GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
+            ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(
             ),
                 children:[
                   CardWidget(icon: FontAwesomeIcons.eye,onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => WatchStudentPage()));},content: "Xem danh sách",size: size),
@@ -38,17 +39,14 @@ class HomePage extends StatelessWidget {
                   CardWidget(icon: FontAwesomeIcons.trash,onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => DeletePage()));},content: "Xóa sinh viên",size: size),
                   CardWidget(icon: FontAwesomeIcons.plus,onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => AddStudentPage()));},content: "Thêm sinh viên",size: size),
 
-                ],
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(
-            )
+                ]
             )
 
 
 
           ],
         ),
-        drawer: Drawer(
+        drawer: const Drawer(
           child: HomeMenu(),
         ));
   }

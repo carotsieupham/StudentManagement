@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../firebase/firebase_firestore.dart';
+import 'components/cardModalAddGrades.dart';
 
 class DetailStudentPage extends StatefulWidget {
    DetailStudentPage({super.key,required this.students}) ;
@@ -26,6 +27,13 @@ class _DetailStudentPageState extends State<DetailStudentPage> {
     });
   }
 
+  Future<void> _refreshData() async {
+    setState(() {
+      _data = [];
+    });
+    await _fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +45,13 @@ class _DetailStudentPageState extends State<DetailStudentPage> {
           DataColumn(
             label: Text(
               'Môn học',
-              style: TextStyle(fontStyle: FontStyle.italic),
+              style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),
             ),
           ),
           DataColumn(
             label: Text(
               'Điểm',
-              style: TextStyle(fontStyle: FontStyle.italic),
+              style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -58,19 +66,39 @@ class _DetailStudentPageState extends State<DetailStudentPage> {
                       return const SizedBox.shrink(); // Hiển thị tiến trình chờ đợi
                     } else {
                       if (snapshot.hasError) {
-                        return Text('Error'); // Hiển thị thông báo lỗi nếu có lỗi xảy ra
+                        return const Text('Error'); // Hiển thị thông báo lỗi nếu có lỗi xảy ra
                       } else {
-                        return Text(snapshot.data ?? ''); // Hiển thị dữ liệu khi truy vấn hoàn thành
+                        return Text(snapshot.data ?? '',style: TextStyle(fontSize:20),); // Hiển thị dữ liệu khi truy vấn hoàn thành
                       }
                     }
                   },
                 ),
               ),
-              DataCell(Text(data['grades'].toString())), // Chuyển đổi thành chuỗi trước khi sử dụng
+              DataCell(Text(data['grades'].toString(),style: TextStyle(fontSize:20))), // Chuyển đổi thành chuỗi trước khi sử dụng
             ],
           );
         }).toList(),
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return CardModalAddGrades(
+                students: widget.students,
+                refreshData: _refreshData, // Truyền hàm refreshData vào CardModalAddGrades
+              );
+            },
+          );
+        },
+        backgroundColor:const Color(0xff45a8ad),
+        child: const Icon(Icons.add),
+      )
     );
   }
 }
