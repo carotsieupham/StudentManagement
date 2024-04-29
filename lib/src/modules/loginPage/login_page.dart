@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_manage/src/app.dart';
-import 'package:student_manage/src/bloc/auth_bloc.dart';
+
 import 'package:student_manage/src/dialog/loading_dialog.dart';
 import 'package:student_manage/src/dialog/msg_dialog.dart';
 import 'package:student_manage/src/modules/homePage/home_page.dart';
@@ -15,10 +15,10 @@ class LoginPage extends StatelessWidget {
     void _oncSignInClick() {
       String email = _emailController.text;
       String password = _passwordController.text;
-      var authBloc = MyApp.of(context)!.authBloc;
+      var authBloc = MyApp.of(context).authBloc;
       LoadingDialog.showLoadingDialog(context, 'Loading...');
 
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         authBloc.signIn(email, password, () {
           LoadingDialog.hideLoadingDialog(context);
           Navigator.push(

@@ -37,7 +37,7 @@ class ListStudents extends StatelessWidget {
                 );
                 return GestureDetector(
                   onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyTable()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailStudentPage(students: students,)));
                   } ,
                   child: CardBodyWidget(
                     students: students,

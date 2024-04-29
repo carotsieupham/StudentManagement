@@ -1,6 +1,8 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStore {
+
   static Future<void> addStudent(
       String name, String classID, String mssv) async {
     // Thêm sinh viên vào bảng student
@@ -10,6 +12,7 @@ class FireStore {
       'mssv': mssv
     });
   }
+
   static Future<void> deleteStudent(String studentsId) async {
     try {
       await FirebaseFirestore.instance.collection('student').doc(studentsId).delete();
@@ -45,5 +48,42 @@ class FireStore {
     }
 
     return className;
+  }
+
+  static Future<void> getGrades(List<Map<String, dynamic>> _data) async{
+    try{
+      await FirebaseFirestore.instance
+         .collection('studentGrades')
+         .get().then((QuerySnapshot querySnapshot) {
+           querySnapshot.docs.forEach((doc) {
+             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+             _data.add({
+               'mssv':data['mssv'],
+               'grades':data['grades'],
+               'subjectId':data['subjectId']
+             });
+           });
+
+     });
+    }
+    catch(e){
+      print('Error getting document: $e');
+    }
+  }
+
+  static Future<String> getSubjectName(String subjectID) async {
+    String subjectName = "";
+
+    // Lấy thông tin môn học dựa trên SubjectID
+    final subjectSnapshot = await FirebaseFirestore.instance
+        .collection('subject')
+        .where('subjectId', isEqualTo: subjectID)
+        .get();
+
+
+      // Lấy SubjectName từ kết quả truy vấn
+      subjectName = subjectSnapshot.docs[0].get('name');
+
+    return subjectName;
   }
 }

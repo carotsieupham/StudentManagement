@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../updatePage/components/cardModalButton.dart';
@@ -23,7 +22,7 @@ class CardBodyWidget extends StatelessWidget {
       future: FireStore.getClassName(students.id),
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return SizedBox.shrink();
         } else {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
